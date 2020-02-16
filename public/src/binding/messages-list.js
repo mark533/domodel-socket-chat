@@ -16,20 +16,21 @@ export default class extends Binding {
 				source: "---"
 			} })
 		})   
-		irc.listen("message add", (data) => {
+		irc.listen("message add", async (data) => {
 			const {message, channel = null} = data
 			if (irc.channel === null) {
 				irc.messages.push(message)
-				DOModel.run(MessageModel, { parentNode: this.root, data: message })
+				await DOModel.run(MessageModel, { parentNode: this.root, data: message })
 			} else if(channel !== null) {
 				irc.channels.find(ch => ch.name === channel.name).messages.push(message)
 				if(irc.channel.name === channel.name) {
-					DOModel.run(MessageModel, { parentNode: this.root, data: message })
+					await DOModel.run(MessageModel, { parentNode: this.root, data: message })
 				}
 			} else {
 				irc.channel.messages.push(message)
-				DOModel.run(MessageModel, { parentNode: this.root, data: message })
+				await DOModel.run(MessageModel, { parentNode: this.root, data: message })
 			}
+			this.root.scrollTop = this.root.scrollHeight
 		})
 		irc.listen("message send", message => {
 			socket.emit("message send", { channelName: irc.channel.name, message})
