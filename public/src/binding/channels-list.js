@@ -1,5 +1,5 @@
-import Binding from '../lib/domodel/src/binding.js'
-import DOModel from '../lib/domodel/src/core.js'
+import Binding from '../../lib/domodel/src/binding.js'
+import DOModel from '../../lib/domodel/src/core.js'
 
 import ChannelTabBinding from './channel-tab.js'
 import ChannelTabModel from '../model/channel-tab.js'

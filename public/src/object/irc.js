@@ -1,4 +1,4 @@
-import EventDriven from '../lib/domodel/src/event.js'
+import EventDriven from '../../lib/domodel/src/event.js'
 
 export const PREFIX_CHANNEL = "#"
 export const PREFIX_OWNER = "@"

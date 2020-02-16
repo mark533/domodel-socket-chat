@@ -1,4 +1,4 @@
-import Binding from '../lib/domodel/src/binding.js'
+import Binding from '../../lib/domodel/src/binding.js'
 
 export default class extends Binding {
 

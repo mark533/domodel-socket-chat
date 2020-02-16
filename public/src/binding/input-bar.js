@@ -1,6 +1,6 @@
-import Binding from '../lib/domodel/src/binding.js'
+import Binding from '../../lib/domodel/src/binding.js'
 
-import CommandProcessor, { PREFIX_COMMAND } from '../lib/command_processor.js'
+import CommandProcessor, { PREFIX_COMMAND } from '../../lib/command_processor.js'
 
 import { socket } from './irc.js'
 
