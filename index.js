@@ -62,10 +62,6 @@ io.on("connection", socket => {
 		}
 	});
 
-	socket.on("users list", () => {
-		socket.emit("users list", _users.filter(user => _channel.users.includes(user.id)) === true);
-	});
-
 	socket.on("user nickname", nickname => {
 		currentUser.nickname = nickname
 	});
