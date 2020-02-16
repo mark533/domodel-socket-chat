@@ -1,4 +1,0 @@
-/* Media queries */
-@import "../breakpoint-1000.css" screen and (max-width: 62.500em);  /* 1000px */
-@import "../breakpoint-768.css" screen and (max-width: 47.500em);  /* 768px */
-@import "../breakpoint-600.css" screen and (max-width: 37.500em);  /* 600px */
