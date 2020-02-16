@@ -1,0 +1,4 @@
+[submodule "public/lib/domodel"]
+	path = public/lib/domodel
+	url = https://github.com/thoughtsunificator/domodel
+	branch = master
