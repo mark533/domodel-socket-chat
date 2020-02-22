@@ -1,5 +1,4 @@
-import DOModel from '../../lib/domodel/src/core.js'
-import Binding from '../../lib/domodel/src/binding.js'
+import { DOModel, Binding } from '../../lib/domodel/index.js'
 
 import IRC from '../object/irc.js'
 
@@ -19,7 +18,7 @@ export const socket = io();
 
 export default class extends Binding {
 
-	async bind() {
+	async onCreated() {
 		const irc = new IRC()
 		let disconnected = null
 		await DOModel.run(ChannelsListModel, { parentNode: this.root, binding: new ChannelsListBinding({ irc }) })
@@ -61,5 +60,5 @@ export default class extends Binding {
 			console.log(socket)
 		})
 	}
-	
+
 }

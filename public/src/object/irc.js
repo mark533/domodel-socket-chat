@@ -1,4 +1,4 @@
-import EventDriven from '../../lib/domodel/src/event.js'
+import { Observable } from '../../lib/domodel/index.js'
 
 export const PREFIX_CHANNEL = "#"
 export const PREFIX_OWNER = "@"
@@ -9,7 +9,7 @@ const STATE_INITIALIZING = 0
 const STATE_CHANNEL_VIEW = 1
 const STATE_SERVER_VIEW = 2
 
-export default class extends EventDriven {
+export default class extends Observable {
 
 	constructor() {
 		super()
@@ -29,10 +29,10 @@ export default class extends EventDriven {
 
 	get users() { return this._users }
 	set users(users) { this._users = users }
- 
+
 	get channels() { return this._channels}
 	set channels(channels) { this._channels = channels}
-	
+
 	get channel() { return this._channel }
 	set channel(channel) { this._channel = channel }
 
@@ -54,6 +54,6 @@ export default class extends EventDriven {
 		const index = this.channels.findIndex(channel => channel.name === name)
 		this.channels.splice(index, 1)
 	}
-	
+
 
 }

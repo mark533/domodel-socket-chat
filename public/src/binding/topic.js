@@ -1,10 +1,10 @@
-import Binding from '../../lib/domodel/src/binding.js'
+import { Binding } from '../../lib/domodel/index.js'
 
 import { socket } from './irc.js'
 
 export default class extends Binding {
 
-	async bind() {
+	async onCreated() {
 		const { irc, channel } = this.props
 		irc.listen("channel left", () => {
 			this.identifier.topic.style.display = "none"
@@ -16,7 +16,7 @@ export default class extends Binding {
 		socket.on("channel topic", data => {
 			const { topic } = data
 			this.identifier.topic.textContent = topic
-		});	
+		});
 	}
-	
+
 }

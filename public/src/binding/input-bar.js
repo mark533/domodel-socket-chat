@@ -1,4 +1,4 @@
-import Binding from '../../lib/domodel/src/binding.js'
+import { Binding } from '../../lib/domodel/index.js'
 
 import CommandProcessor, { PREFIX_COMMAND } from '../../lib/command_processor.js'
 
@@ -6,7 +6,7 @@ import { socket } from './irc.js'
 
 export default class extends Binding {
 
-	async bind() {
+	async onCreated() {
 		const { irc } = this.props
 		const history = []
 		let historyIndex = 0

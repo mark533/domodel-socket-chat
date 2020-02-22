@@ -1,4 +1,4 @@
-import DOModel from '../lib/domodel/src/core.js'
+import { DOModel } from '../lib/domodel/index.js'
 import IRCModel from './model/irc.js'
 import IRCBinding from './binding/irc.js'
 

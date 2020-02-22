@@ -1,8 +1,8 @@
-import Binding from '../../lib/domodel/src/binding.js'
+import { Binding } from '../../lib/domodel/index.js'
 
 export default class extends Binding {
-	
-	async bind() {
+
+	async onCreated() {
 		const { irc, channel, user } = this.props
 		irc.listen("user renamed", data => {
 			const { nickname, userId } = data
@@ -20,5 +20,5 @@ export default class extends Binding {
 			irc.emit("input", { value: `/MSG ${user.nickname} `, focus: true})
 		})
 	}
-	
+
 }

@@ -1,10 +1,10 @@
-import Binding from '../../lib/domodel/src/binding.js'
+import { Binding } from '../../lib/domodel/index.js'
 
 export default class extends Binding {
 
-	async bind() {
+	async onCreated() {
 		const { irc, channel } = this.props
-		irc.listen("channel set", _channel => {     
+		irc.listen("channel set", _channel => {
 			if (channel.name === _channel.name) {
 				this.root.style.backgroundColor = "gray"
 			} else {
@@ -35,5 +35,5 @@ export default class extends Binding {
 			}
 		})
 	}
-	
+
 }

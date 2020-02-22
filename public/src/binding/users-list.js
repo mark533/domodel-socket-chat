@@ -1,5 +1,4 @@
-import DOModel from '../../lib/domodel/src/core.js'
-import Binding from '../../lib/domodel/src/binding.js'
+import { DOModel, Binding } from '../../lib/domodel/index.js'
 
 import UserTabModel from '../model/user-tab.js'
 
@@ -9,7 +8,7 @@ import { socket } from './irc.js'
 
 export default class extends Binding {
 
-	async bind() {
+	async onCreated() {
 		const {irc} = this.props
 		socket.on("user joined", data => {
 			const { user, users, channel } = data
@@ -18,7 +17,7 @@ export default class extends Binding {
 			irc.channels[index].users = channel.users
 			if(irc.channel.name === channel.name) {
 				this.identifier.counter.textContent = channel.users.length + " total"
-				DOModel.run(UserTabModel, { parentNode: this.identifier.list, binding: new UserTabBinding({ irc, user, channel }), data: { irc, user, channel } })
+				DOModel.run(UserTabModel({ irc, user, channel }), { parentNode: this.identifier.list, binding: new UserTabBinding({ irc, user, channel }) })
 			}
 		});
 		socket.on("user left", data => {
@@ -51,7 +50,7 @@ export default class extends Binding {
 				this.identifier.list.innerHTML = ''
 				this.identifier.counter.textContent = irc.channel.users.length + " total"
 				for (const user of users) {
-					DOModel.run(UserTabModel, { parentNode: this.identifier.list, binding: new UserTabBinding({ irc, user, channel: irc.channel }), data: { irc, user, channel: irc.channel } })
+					DOModel.run(UserTabModel({ irc, user, channel: irc.channel }), { parentNode: this.identifier.list, binding: new UserTabBinding({ irc, user, channel: irc.channel }) })
 				}
 			}
 		})
@@ -72,5 +71,5 @@ export default class extends Binding {
 			}
 		})
 	}
-	
+
 }

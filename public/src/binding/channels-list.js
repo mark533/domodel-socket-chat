@@ -1,5 +1,4 @@
-import Binding from '../../lib/domodel/src/binding.js'
-import DOModel from '../../lib/domodel/src/core.js'
+import { DOModel, Binding } from '../../lib/domodel/index.js'
 
 import ChannelTabBinding from './channel-tab.js'
 import ChannelTabModel from '../model/channel-tab.js'
@@ -11,14 +10,14 @@ import {socket} from './irc.js'
 
 export default class extends Binding {
 
-	async bind() {
+	async onCreated() {
 		const { irc } = this.props
 		irc.listen("channel list", function (query) {
 			socket.emit('channel list', query);
 		})
 		socket.on("channel list", channels => {
 			irc.emit("irc message", channels.map(channel => channel.name).join(", "))
-		});		
+		});
 		irc.listen("channel topic", function (topic) {
 			socket.emit('channel topic', {topic, name: irc.channel.name});
 		})
@@ -43,7 +42,7 @@ export default class extends Binding {
 			irc.users = users
 			irc.channel = channel
 			irc.channels.push(irc.channel)
-			DOModel.run(ChannelTabModel, { parentNode: this.root, data: channel, binding: new ChannelTabBinding({ irc, channel}) })
+			DOModel.run(ChannelTabModel(channel), { parentNode: this.root, binding: new ChannelTabBinding({ irc, channel}) })
 			irc.emit("channel set", channel)
 		})
 		socket.on("channel reconnect", data => {
@@ -108,5 +107,5 @@ export default class extends Binding {
 			}
 		})
 	}
-	
+
 }
