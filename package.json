@@ -9,8 +9,5 @@
 	"dependencies": {
 		"express": "4.13.4",
 		"socket.io": "^2.3.0"
-	},
-	"scripts": {
-		"start": "node index.js"
 	}
 }
