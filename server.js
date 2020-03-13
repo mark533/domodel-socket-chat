@@ -50,7 +50,7 @@ io.on("connection", socket => {
 	socket.emit("message send", {
 		message: { 
 			source: "---", time: new Date().getTime(),
-			message: `Welcome to my_irc ! ${_users.length} user(s) online.`, 
+			message: `Welcome to domodel-socket-chat ! ${_users.length} user(s) online.`, 
 		}
 	});
 
