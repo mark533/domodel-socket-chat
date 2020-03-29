@@ -1,6 +1,6 @@
 # domodel-socket-chat
 
-A fake IRC client built with [domodel](https://github.com/thoughtsunificator/domodel-socket-chat).
+A fake IRC client built with [domodel](https://github.com/thoughtsunificator/domodel).
 
 ## Getting started
 
