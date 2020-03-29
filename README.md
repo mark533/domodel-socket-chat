@@ -1,12 +1,15 @@
 # domodel-socket-chat
 
-## How to use
+A fake IRC client built with [domodel](https://github.com/thoughtsunificator/domodel-socket-chat).
+
+## Getting started
+
+### Installation
 
 - npm install
 - npm start
 
 ## Note
 
-- subgrid does not work on Chrome
-- scrollbar-width does not work on Chrome
-- Channel owner cannot be recognized with socket id as it is not persited client-side
+- [Subgrid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Subgrid) are not yet shipped on Chrome so there is some minor issues with the layout while browing on Chrome.
+- Same as above for [scrollbar-width](https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width).
