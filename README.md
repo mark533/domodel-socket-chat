@@ -6,8 +6,8 @@ A fake IRC client built with [domodel](https://github.com/thoughtsunificator/dom
 
 ### Installation
 
-- npm install
-- npm start
+- ```npm install```
+- ```npm start```
 
 ## Note
 
