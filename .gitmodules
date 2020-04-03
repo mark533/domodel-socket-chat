@@ -5,3 +5,4 @@
 [submodule "public/lib/css-generics"]
 	path = public/lib/css-generics
 	url = https://github.com/thoughtsunificator/css-generics.git
+	branch = master

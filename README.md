@@ -9,6 +9,10 @@ A fake IRC client built with [domodel](https://github.com/thoughtsunificator/dom
 - ```npm install```
 - ```npm start```
 
+## TODO
+
+- [ ] unit tests
+
 ## Note
 
 - [Subgrid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Subgrid) are not yet shipped on Chrome so there is some minor issues with the layout while browing on Chrome.
