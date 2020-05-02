@@ -12,5 +12,9 @@
 	"dependencies": {
 		"express": "4.13.4",
 		"socket.io": "^2.3.0"
+	},
+	"devDependencies": {
+		"esm": "^3.2.25",
+		"nodeunit": "^0.11.3"
 	}
 }
