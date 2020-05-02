@@ -6,6 +6,9 @@
 	"author": "thoughtsunificator",
 	"private": true,
 	"license": "BSD",
+	"scripts": {
+		"test": "node -r ./node_modules/esm/index.js ./node_modules/nodeunit/bin/nodeunit"
+	},
 	"dependencies": {
 		"express": "4.13.4",
 		"socket.io": "^2.3.0"
