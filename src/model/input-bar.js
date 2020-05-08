@@ -7,12 +7,12 @@ export default data => ({
 	children: [
 		{
 			tagName: "div",
-			style: "position: relative; right: 0px; bottom: 0px; cursor: pointer; z-index: 1; text-align: center",
+			style: "position: relative; right: 0px; bottom: 0px; cursor: pointer; z-index: 1; text-align: center;",
 			children: [
 				{
 					tagName: "div",
 					identifier: "submenu",
-					style: "display: none; position: absolute; bottom: 35px; grid-template-columns: repeat(10, auto); background-color: rgba(0, 0, 0, 0.28); left: 5px; grid-gap: 5px;",
+					style: "display: none; position: absolute;  padding: 5px; bottom: 35px; grid-template-columns: repeat(10, auto); background-color: rgba(0, 0, 0, 0.28); left: 5px; grid-gap: 5px;",
 					children: [
 						"😁","😂","🤣","😃","😄","😅","😆","😉","😊","😋","😎","😍","😘","🥰","😗","😙","😚","☺️","🙂","🤗","🤩","🤔","🤨","😐","😑","😶","🙄","😏","😣","😥","😮","🤐","😯","😪","😫","😴","😌","😛","😜","😝","🤤","😒","😓","😔","😕","🙃","🤑","😲","☹️","🙁","😖","😞","😟","😤","😢","😭","😦","😧","😨","😩","🤯","😬","😰","😱","🥵","🥶","😳","🤪","😵","😡","😠","🤬","😷","🤒","🤕","🤢","🤮","🤧","😇","🤠","🤡","🥳","🥴","🥺","🤥","🤫","🤭","🧐","🤓","😈","👿","👹","👺","💀","👻","👽","🤖","💩","😺","😸","😹","😻","😼","😽","🙀","😿","😾"
 						].map(emoji => ({
