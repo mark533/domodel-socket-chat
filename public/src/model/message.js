@@ -1,4 +1,14 @@
 export default data => ({
 	tagName: "div",
-	textContent: `[${new Date(data.time).toLocaleTimeString('en-US', { hour12: false })}] ${data.source} ${data.message}`
+	children: [
+		{
+			tagName: "span",
+			textContent:`[${new Date(data.message.time).toLocaleTimeString('en-US', { hour12: false })}] `
+		},
+		{
+			tagName: "span",
+			textContent: `${data.message.source} `
+		},
+		data.replacedMessage
+	]
 })

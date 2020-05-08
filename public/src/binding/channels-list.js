@@ -33,6 +33,8 @@ export default class extends Binding {
 					socket.emit("channel join", name)
 				} else if(channel.disconnected === true) {
 					socket.emit("channel reconnect", name)
+				} else {
+					irc.emit("channel set", channel)
 				}
 			}
 		})

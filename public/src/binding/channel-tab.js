@@ -4,28 +4,30 @@ export default class extends Binding {
 
 	async onCreated() {
 		const { irc, channel } = this.props
-		irc.listen("channel set", _channel => {
+		const listeners = []
+		listeners.push(irc.listen("channel set", _channel => {
 			if (channel.name === _channel.name) {
 				this.root.style.backgroundColor = "gray"
 			} else {
 				this.root.style.backgroundColor = ""
 			}
-		})
-		irc.listen("channel left", name => {
+		}))
+		listeners.push(irc.listen("channel left", name => {
 			if (name === channel.name ) {
-					this.root.remove()
+				listeners.forEach(listener => irc.removeListener(listener))
+				this.root.remove()
 			}
-		})
-		irc.listen("channel disconnected", name => {
+		}))
+		listeners.push(irc.listen("channel disconnected", name => {
 			if (name === channel.name) {
 				this.root.textContent = `(${name})`
 			}
-		})
-		irc.listen("channel reconnected", name => {
+		}))
+		listeners.push(irc.listen("channel reconnected", name => {
 			if (name === channel.name) {
 				this.root.textContent = this.root.textContent.substr(1, this.root.textContent.length - 2)
 			}
-		})
+		}))
 		this.root.addEventListener("mouseup", event => {
 			if(event.button === 0) {
 				irc.channel = channel

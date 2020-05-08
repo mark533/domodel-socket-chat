@@ -1,4 +1,5 @@
 import { DOModel, Binding } from '../../lib/domodel/index.js'
+import * as MessageParser from '../../lib/message-parser.js'
 
 import MessageModel from '../model/message.js'
 
@@ -17,17 +18,18 @@ export default class extends Binding {
 		})
 		irc.listen("message add", async (data) => {
 			const {message, channel = null} = data
+			const replacedMessage = MessageParser.replace(irc, message.message)
 			if (irc.channel === null) {
 				irc.messages.push(message)
-				await DOModel.run(MessageModel(message), { parentNode: this.root })
+				await DOModel.run(MessageModel({ message, replacedMessage }), { parentNode: this.root })
 			} else if(channel !== null) {
 				irc.channels.find(ch => ch.name === channel.name).messages.push(message)
 				if(irc.channel.name === channel.name) {
-					await DOModel.run(MessageModel(message), { parentNode: this.root })
+					await DOModel.run(MessageModel({ message, replacedMessage }), { parentNode: this.root })
 				}
 			} else {
 				irc.channel.messages.push(message)
-				await DOModel.run(MessageModel(message), { parentNode: this.root })
+				await DOModel.run(MessageModel({ message, replacedMessage }), { parentNode: this.root })
 			}
 			this.root.scrollTop = this.root.scrollHeight
 		})
@@ -37,22 +39,24 @@ export default class extends Binding {
 		socket.on("message send", message => {
 			irc.emit("message add", message)
 		});
-		irc.listen("channel set", channel => {
+		irc.listen("channel set", async channel => {
 			if (irc.channel.name !== channel.name) {
 				return
 			}
 			this.root.style.gridArea = "2 / 2" // TODO
 			this.root.innerHTML = ''
 			for (const message of channel.messages) {
-				DOModel.run(MessageModel(message), { parentNode: this.root })
+				const replacedMessage = MessageParser.replace(irc, message.message)
+				await DOModel.run(MessageModel({ message, replacedMessage }), { parentNode: this.root })
 			}
 		})
-		irc.listen("channel left", () => {
+		irc.listen("channel left", async () => {
 			if (irc.channels.length === 0) {
 				this.root.style.gridArea = "span 2 / 2" // TODO
 				this.root.innerHTML = ''
 				for (const message of irc.messages) {
-					DOModel.run(MessageModel(message), { parentNode: this.root })
+					const replacedMessage = MessageParser.replace(irc, message.message)
+					await DOModel.run(MessageModel({ message, replacedMessage }), { parentNode: this.root })
 				}
 			}
 		})

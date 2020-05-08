@@ -48,6 +48,7 @@ export default {
 		},
 		{
 			id: "input",
+			autocomplete: "off",
 			identifier: "input",
 			style: "flex-grow: 1",
 			tagName: "input"

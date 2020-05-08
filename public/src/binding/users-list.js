@@ -42,12 +42,10 @@ export default class extends Binding {
 				return
 			}
 			if (channel.disconnected === true) {
-				this.identifier.list.innerHTML = ''
 				this.identifier.counter.textContent = ""
 			} else {
 				const users = irc.channel.users.map(userId => irc.getUserById(userId))
 				this.root.style.display = "grid"
-				this.identifier.list.innerHTML = ''
 				this.identifier.counter.textContent = irc.channel.users.length + " total"
 				for (const user of users) {
 					DOModel.run(UserTabModel({ irc, user, channel: irc.channel }), { parentNode: this.identifier.list, binding: new UserTabBinding({ irc, user, channel: irc.channel }) })
@@ -61,7 +59,6 @@ export default class extends Binding {
 		})
 		irc.listen("channel disconnected", () => {
 			this.identifier.counter.innerHTML = ''
-			this.identifier.list.innerHTML = ''
 		})
 		irc.listen("users list", () => {
 			if (irc.channel === null) {
