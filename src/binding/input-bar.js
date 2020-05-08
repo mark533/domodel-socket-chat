@@ -10,8 +10,12 @@ export default class extends Binding {
 		let historyIndex = 0
 		const commandProcessor = new CommandProcessor(irc)
 		irc.listen("input", data => {
-			const {value, focus} = data
-			this.identifier.input.value = value
+			const {value, focus, increment} = data
+			if(increment === true) {
+				this.identifier.input.value += value
+			} else {
+				this.identifier.input.value = value
+			}
 			if(focus === true) {
 				this.identifier.input.focus()
 			}
@@ -82,6 +86,18 @@ export default class extends Binding {
 		window.addEventListener("keyup", event => {
 			if (event.keyCode === 27) {
 				this.identifier.popup.style.display = "none"
+			}
+		})
+		window.addEventListener("click", event => {
+			if(event.target.contains(this.identifier.emojiButton) === false) {
+				this.identifier.submenu.style.display = "none"
+			}
+		})
+		this.identifier.emojiButton.addEventListener("click", () => {
+			if(this.identifier.submenu.style.display === "none") {
+				this.identifier.submenu.style.display = "grid"
+			} else {
+				this.identifier.submenu.style.display = "none"
 			}
 		})
 	}

@@ -1,10 +1,36 @@
 import { DEFAULT_NICKNAME } from '../object/irc.js'
 
-export default {
+export default data => ({
 	id: "input-bar",
 	tagName: "div",
 	style: "display: flex; grid-area: 3 / 2",
 	children: [
+		{
+			tagName: "div",
+			style: "position: relative; right: 0px; bottom: 0px; cursor: pointer; z-index: 1; text-align: center",
+			children: [
+				{
+					tagName: "div",
+					identifier: "submenu",
+					style: "display: none; position: absolute; bottom: 35px; grid-template-columns: repeat(10, auto); background-color: rgba(0, 0, 0, 0.28); left: 5px; grid-gap: 5px;",
+					children: [
+						"😁","😂","🤣","😃","😄","😅","😆","😉","😊","😋","😎","😍","😘","🥰","😗","😙","😚","☺️","🙂","🤗","🤩","🤔","🤨","😐","😑","😶","🙄","😏","😣","😥","😮","🤐","😯","😪","😫","😴","😌","😛","😜","😝","🤤","😒","😓","😔","😕","🙃","🤑","😲","☹️","🙁","😖","😞","😟","😤","😢","😭","😦","😧","😨","😩","🤯","😬","😰","😱","🥵","🥶","😳","🤪","😵","😡","😠","🤬","😷","🤒","🤕","🤢","🤮","🤧","😇","🤠","🤡","🥳","🥴","🥺","🤥","🤫","🤭","🧐","🤓","😈","👿","👹","👺","💀","👻","👽","🤖","💩","😺","😸","😹","😻","😼","😽","🙀","😿","😾"
+						].map(emoji => ({
+							tagName: "div",
+							identifier: "helpButton",
+							style: "cursor: pointer;",
+							onclick: () => data.irc.emit("input", { value: emoji, increment: true, focus: true}),
+							textContent: emoji
+						}))
+				},
+				{
+					tagName: "div",
+					identifier: "emojiButton",
+					style: "cursor: pointer; user-select: none; border-radius: 5px;",
+					textContent: "😁"
+				}
+			]
+		},
 		{
 			tagName: "div",
 			id: "nickname",
@@ -54,4 +80,4 @@ export default {
 			tagName: "input"
 		}
 	]
-}
+})

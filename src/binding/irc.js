@@ -32,7 +32,7 @@ export default class extends Binding {
 		await DOModel.run(TopicModel, { parentNode: this.root, binding: new TopicBinding({ irc }) })
 		await DOModel.run(MessageListModel, { parentNode: this.root, binding: new MessageListBinding({ irc }) })
 		await DOModel.run(UsersListModel, { parentNode: this.root, binding: new UsersListBinding({ irc }) })
-		await DOModel.run(InputBarModel, { parentNode: this.root, binding: new InputBarBinding({ irc }) })
+		await DOModel.run(InputBarModel({ irc }), { parentNode: this.root, binding: new InputBarBinding({ irc }) })
 		irc.emit("irc message", "Connecting...")
 		irc.webSocket.on("connect", () => {
 			irc.emit("irc message", "Connected.")
