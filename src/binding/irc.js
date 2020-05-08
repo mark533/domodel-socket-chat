@@ -14,12 +14,13 @@ import UsersListBinding from './users-list.js'
 import MessageListBinding from './messages-list.js'
 import InputBarBinding from './input-bar.js'
 
-export const socket = io();
-
 export default class extends Binding {
 
 	async onCreated() {
-		const irc = new IRC()
+
+		const webSocket = io("ws://localhost:3001");
+
+		const irc = new IRC(webSocket)
 		let disconnected = null
 		await DOModel.run(ChannelsListModel, { parentNode: this.root, binding: new ChannelsListBinding({ irc }) })
 		await DOModel.run(TopicModel, { parentNode: this.root, binding: new TopicBinding({ irc }) })
@@ -27,19 +28,19 @@ export default class extends Binding {
 		await DOModel.run(UsersListModel, { parentNode: this.root, binding: new UsersListBinding({ irc }) })
 		await DOModel.run(InputBarModel, { parentNode: this.root, binding: new InputBarBinding({ irc }) })
 		irc.emit("irc message", "Connecting...")
-		socket.on("connect", () => {
+		irc.webSocket.on("connect", () => {
 			irc.emit("irc message", "Connected.")
-			irc.user.id = socket.id
+			irc.user.id = irc.webSocket.id
 			irc.emit("input focus")
 			if(disconnected === true) {
-				socket.emit("user nickname", irc.user.nickname)
+				irc.webSocket.emit("user nickname", irc.user.nickname)
 				for (const channel of irc.channels) {
-					socket.emit("channel reconnect", channel.name)
+					irc.webSocket.emit("channel reconnect", channel.name)
 				}
 			}
 			disconnected = false
 		})
-		socket.on("disconnect", () => {
+		irc.webSocket.on("disconnect", () => {
 			irc.users = []
 			irc.emit("irc message", "Disconnected.")
 			irc.channel = null
@@ -50,14 +51,14 @@ export default class extends Binding {
 			disconnected = true
 		})
 		irc.listen("disconnect", () => {
-			socket.disconnect()
+			irc.webSocket.disconnect()
 		})
 		irc.listen("connect", () => {
-			socket.connect()
+			irc.webSocket.connect()
 		})
 		irc.listen("debug", () => {
 			console.log(irc)
-			console.log(socket)
+			console.log(irc.webSocket)
 		})
 	}
 

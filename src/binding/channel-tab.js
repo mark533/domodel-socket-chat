@@ -2,6 +2,7 @@ import { Binding } from '../../lib/domodel/index.js'
 
 export default class extends Binding {
 
+
 	async onCreated() {
 		const { irc, channel } = this.props
 		const listeners = []

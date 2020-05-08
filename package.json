@@ -1,0 +1,26 @@
+{
+	"name": "domodel-socket-chat-client",
+	"version": "1.0.0",
+	"description": "A fake IRC client built with domodel.",
+	"main": "index.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"scripts": {
+		"start": "browser-sync -s -w  --no-ui --no-online -no-notify --no-open",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/thoughtsunificator/domodel-socket-chat-client.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/thoughtsunificator/domodel-socket-chat-client/issues"
+	},
+	"homepage": "https://github.com/thoughtsunificator/domodel-socket-chat-client#readme",
+	"devDependencies": {
+		"browser-sync": "^2.26.7"
+	}
+}

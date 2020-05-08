@@ -13,15 +13,18 @@ const STATE_SERVER_VIEW = 2
 
 export default class extends Observable {
 
-	constructor() {
+	constructor(webSocket) {
 		super()
-		this.state = STATE_INITIALIZING
-		this.user = { nickname: DEFAULT_NICKNAME}
-		this.users = [this.user]
-		this.channels = []
-		this.channel = null
-		this.messages = []
+		this._webSocket = webSocket
+		this._state = STATE_INITIALIZING
+		this._user = { nickname: DEFAULT_NICKNAME}
+		this._users = [this.user]
+		this._channels = []
+		this._channel = null
+		this._messages = []
 	}
+
+	get webSocket() { return this._webSocket }
 
 	get state() { return this._state }
 	set state(state) { this._state = state }

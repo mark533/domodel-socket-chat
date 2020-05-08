@@ -2,8 +2,6 @@ import { DOModel, Binding } from '../../lib/domodel/index.js'
 
 import MessageModel from '../model/message.js'
 
-import { socket } from './irc.js'
-
 export default class extends Binding {
 
 	async onCreated() {
@@ -33,9 +31,9 @@ export default class extends Binding {
 			this.root.scrollTop = this.root.scrollHeight
 		})
 		irc.listen("message send", message => {
-			socket.emit("message send", { channelName: irc.channel.name, message})
+			irc.webSocket.emit("message send", { channelName: irc.channel.name, message})
 		})
-		socket.on("message send", message => {
+		irc.webSocket.on("message send", message => {
 			irc.emit("message add", message)
 		});
 		irc.listen("channel set", async channel => {

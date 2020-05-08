@@ -5,21 +5,18 @@ import ChannelTabModel from '../model/channel-tab.js'
 
 import { PREFIX_CHANNEL } from '../object/irc.js'
 
-import {socket} from './irc.js'
-
-
 export default class extends Binding {
 
 	async onCreated() {
 		const { irc } = this.props
 		irc.listen("channel list", function (query) {
-			socket.emit('channel list', query);
+			irc.webSocket.emit('channel list', query);
 		})
-		socket.on("channel list", channels => {
+		irc.webSocket.on("channel list", channels => {
 			irc.emit("irc message", channels.map(channel => channel.name).join(", "))
 		});
 		irc.listen("channel topic", function (topic) {
-			socket.emit('channel topic', {topic, name: irc.channel.name});
+			irc.webSocket.emit('channel topic', {topic, name: irc.channel.name});
 		})
 		irc.listen("channel set", function (channel) {
 			irc.channel = channel
@@ -27,14 +24,14 @@ export default class extends Binding {
 		irc.listen("channel join", name => {
 			const channel = irc.channels.find(item => item.name === name)
 			if (typeof channel === "undefined") {
-				socket.emit("channel join", name)
+				irc.webSocket.emit("channel join", name)
 			} else if(channel.disconnected === true) {
-				socket.emit("channel reconnect", name)
+				irc.webSocket.emit("channel reconnect", name)
 			} else {
 				irc.emit("channel set", channel)
 			}
 		})
-		socket.on("channel join", data => {
+		irc.webSocket.on("channel join", data => {
 			const { channel, users, nickname} = data
 			irc.user.nickname = nickname
 			irc.users = users
@@ -43,7 +40,7 @@ export default class extends Binding {
 			DOModel.run(ChannelTabModel(channel), { parentNode: this.root, binding: new ChannelTabBinding({ irc, channel}) })
 			irc.emit("channel set", channel)
 		})
-		socket.on("channel reconnect", data => {
+		irc.webSocket.on("channel reconnect", data => {
 			const { channel, users, nickname } = data
 			irc.user.nickname = nickname
 			irc.users = users
@@ -70,10 +67,10 @@ export default class extends Binding {
 			} else if(irc.channel === null) {
 				irc.emit("irc message", "No channel joined. Try /join #<channel>")
 			} else {
-				socket.emit("channel leave", name)
+				irc.webSocket.emit("channel leave", name)
 			}
 		})
-		socket.on("channel leave", _channel => {
+		irc.webSocket.on("channel leave", _channel => {
 			const index = irc.channels.findIndex(channel => channel.name === _channel.name)
 			irc.channels.splice(index, 1)
 			irc.emit("channel left", _channel.name)
@@ -85,23 +82,23 @@ export default class extends Binding {
 			}
 		})
 		irc.listen("channel disconnect", (name = irc.channel.name) => {
-			socket.emit("channel disconnect", name)
+			irc.webSocket.emit("channel disconnect", name)
 		})
-		socket.on("channel disconnect", _channel => {
+		irc.webSocket.on("channel disconnect", _channel => {
 			irc.channel = null
 			const channel = irc.channels.find(channel => channel.name === _channel.name)
 			channel.disconnected = true
 			irc.emit("channel disconnected", _channel.name)
 		})
 		irc.listen("channel delete", name => {
-			socket.emit("channel delete", name)
+			irc.webSocket.emit("channel delete", name)
 		})
 		irc.listen("user message", data => {
 			const { nickname, message } = data
 			if (irc.channel === null) {
 				irc.emit("irc message", "No channel joined. Try /join #<channel>")
 			} else {
-				socket.emit("user message", {nickname, message, channelName: irc.channel.name})
+				irc.webSocket.emit("user message", {nickname, message, channelName: irc.channel.name})
 			}
 		})
 	}

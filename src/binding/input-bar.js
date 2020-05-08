@@ -2,8 +2,6 @@ import { Binding } from '../../lib/domodel/index.js'
 
 import CommandProcessor, { PREFIX_COMMAND } from '../../lib/command-processor.js'
 
-import { socket } from './irc.js'
-
 export default class extends Binding {
 
 	async onCreated() {
@@ -21,20 +19,20 @@ export default class extends Binding {
 		irc.listen("input focus", () => {
 			this.identifier.input.focus()
 		})
-		socket.on("channel join", data => {
+		irc.webSocket.on("channel join", data => {
 			const { nickname } = data
 			this.identifier.buttonNick.textContent = nickname
 		})
-		socket.on("channel reconnect", data => {
+		irc.webSocket.on("channel reconnect", data => {
 			const { nickname } = data
 			this.identifier.buttonNick.textContent = nickname
 		})
-		socket.on("nickname set", nickname => {
+		irc.webSocket.on("nickname set", nickname => {
 			irc.user.nickname = nickname
 			this.identifier.buttonNick.textContent = nickname
 		});
 		irc.listen("nickname set", nickname => {
-			socket.emit("nickname set", nickname)
+			irc.webSocket.emit("nickname set", nickname)
 		})
 		this.identifier.input.addEventListener("keyup", event => {
 			if (event.keyCode === 38 && historyIndex > 0) { // history previous
@@ -55,7 +53,7 @@ export default class extends Binding {
 				if (value.substr(0, 1) === PREFIX_COMMAND) {
 					commandProcessor.run(value)
 				} else {
-					if (socket.connected === false) {
+					if (irc.webSocket.connected === false) {
 						irc.emit("irc message", "Your are not connected to the network. Try /connect" )
 					} else if (irc.channel === null) {
 						irc.emit("irc message", "No channel joined. Try /join #<channel>")

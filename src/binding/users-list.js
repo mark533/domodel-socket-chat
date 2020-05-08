@@ -4,13 +4,11 @@ import UserTabModel from '../model/user-tab.js'
 
 import UserTabBinding from './user-tab.js'
 
-import { socket } from './irc.js'
-
 export default class extends Binding {
 
 	async onCreated() {
 		const {irc} = this.props
-		socket.on("user joined", data => {
+		irc.webSocket.on("user joined", data => {
 			const { user, users, channel } = data
 			const index = irc.channels.findIndex(ch => ch.name === channel.name)
 			irc.users = users
@@ -20,7 +18,7 @@ export default class extends Binding {
 				DOModel.run(UserTabModel({ irc, user, channel }), { parentNode: this.identifier.list, binding: new UserTabBinding({ irc, user, channel }) })
 			}
 		});
-		socket.on("user left", data => {
+		irc.webSocket.on("user left", data => {
 			const { channel, userId, users } = data
 			const index = irc.channels.findIndex(ch => ch.name === channel.name)
 			irc.users = users
@@ -30,7 +28,7 @@ export default class extends Binding {
 				irc.emit("user left", data)
 			}
 		});
-		socket.on("user renamed", data => {
+		irc.webSocket.on("user renamed", data => {
 			const { nickname, userId, users } = data
 			irc.users = users
 			const user = irc.getUserById(userId)
