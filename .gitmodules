@@ -1,0 +1,6 @@
+[submodule "lib/domodel"]
+	path = lib/domodel
+	url = https://github.com/thoughtsunificator/domodel
+[submodule "lib/css-generics"]
+	path = lib/css-generics
+	url = https://github.com/thoughtsunificator/css-generics
