@@ -18,7 +18,13 @@ export default class extends Binding {
 
 	async onCreated() {
 
-		const webSocket = io("ws://localhost:3001");
+		let webSocket
+
+		if(document.location.hostname === "domodel-socket-chat.netlify.app") {
+			webSocket = io("ws://domodel-socket-chat.herokuapp.com");
+		} else {
+			webSocket = io("ws://localhost:3001");
+		}
 
 		const irc = new IRC(webSocket)
 		let disconnected = null
