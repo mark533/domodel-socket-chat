@@ -25,17 +25,13 @@ export default class extends Binding {
 			irc.channel = channel
 		})
 		irc.listen("channel join", name => {
-			if (name.substr(0, 1) !== PREFIX_CHANNEL) {
-				irc.emit("irc message", `${name} :Illegal channel name`)
+			const channel = irc.channels.find(item => item.name === name)
+			if (typeof channel === "undefined") {
+				socket.emit("channel join", name)
+			} else if(channel.disconnected === true) {
+				socket.emit("channel reconnect", name)
 			} else {
-				const channel = irc.channels.find(item => item.name === name)
-				if (typeof channel === "undefined") {
-					socket.emit("channel join", name)
-				} else if(channel.disconnected === true) {
-					socket.emit("channel reconnect", name)
-				} else {
-					irc.emit("channel set", channel)
-				}
+				irc.emit("channel set", channel)
 			}
 		})
 		socket.on("channel join", data => {

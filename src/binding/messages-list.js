@@ -1,5 +1,4 @@
 import { DOModel, Binding } from '../../lib/domodel/index.js'
-import * as MessageParser from '../../lib/message-parser.js'
 
 import MessageModel from '../model/message.js'
 
@@ -18,7 +17,7 @@ export default class extends Binding {
 		})
 		irc.listen("message add", async (data) => {
 			const {message, channel = null} = data
-			const replacedMessage = MessageParser.replace(irc, message.message)
+			const replacedMessage = irc.decorateMessage(message.message)
 			if (irc.channel === null) {
 				irc.messages.push(message)
 				await DOModel.run(MessageModel({ message, replacedMessage }), { parentNode: this.root })
@@ -46,7 +45,7 @@ export default class extends Binding {
 			this.root.style.gridArea = "2 / 2" // TODO
 			this.root.innerHTML = ''
 			for (const message of channel.messages) {
-				const replacedMessage = MessageParser.replace(irc, message.message)
+				const replacedMessage = irc.decorateMessage(message.message)
 				await DOModel.run(MessageModel({ message, replacedMessage }), { parentNode: this.root })
 			}
 		})
@@ -55,7 +54,7 @@ export default class extends Binding {
 				this.root.style.gridArea = "span 2 / 2" // TODO
 				this.root.innerHTML = ''
 				for (const message of irc.messages) {
-					const replacedMessage = MessageParser.replace(irc, message.message)
+					const replacedMessage = irc.decorateMessage(message.message)
 					await DOModel.run(MessageModel({ message, replacedMessage }), { parentNode: this.root })
 				}
 			}

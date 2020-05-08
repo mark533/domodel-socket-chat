@@ -1,8 +1,0 @@
-[submodule "public/lib/domodel"]
-	path = public/lib/domodel
-	url = https://github.com/thoughtsunificator/domodel
-	branch = master
-[submodule "public/lib/css-generics"]
-	path = public/lib/css-generics
-	url = https://github.com/thoughtsunificator/css-generics.git
-	branch = master
