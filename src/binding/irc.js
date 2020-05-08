@@ -21,7 +21,7 @@ export default class extends Binding {
 		let webSocket
 
 		if(document.location.hostname === "domodel-socket-chat.netlify.app") {
-			webSocket = io("ws://domodel-socket-chat.herokuapp.com");
+			webSocket = io("http://domodel-socket-chat.herokuapp.com");
 		} else {
 			webSocket = io("ws://localhost:3001");
 		}
