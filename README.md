@@ -1,4 +1,4 @@
-# domodel-socket-chat [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-socket-chat.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-socket-chat)
+# domodel-socket-chat
 
 A fake IRC client built with [domodel](https://github.com/thoughtsunificator/domodel).
 
