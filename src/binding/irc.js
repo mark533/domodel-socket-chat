@@ -21,9 +21,9 @@ export default class extends Binding {
 		let webSocket
 
 		if(document.location.hostname === "domodel-socket-chat.netlify.app") {
-			webSocket = io("ws://domodel-socket-chat.herokuapp.com");
+			webSocket = io.connect("https://domodel-socket-chat.herokuapp.com", {secure: true});
 		} else {
-			webSocket = io("ws://localhost:3001");
+			webSocket = io.connect("ws://localhost:3001");
 		}
 
 		const irc = new IRC(webSocket)
